@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div>
+        <h3>압축</h3>
+        <button type="button" onclick="zip()">압축</button>
+        <button type="button" onclick="zipPassword()">비밀번호 압축</button>
+    </div>
+    <div>
+        <h3>압축해제</h3>
+        <input type="file" id="file"/>
+        <button onclick="unzip()">제출</button>
+    </div>
+</div>
+</body>
+</html>
+
+<script th:inline="javascript">
+    async function zip() {
+        await fetch('/zip', {
+            method: 'POST'
+        });
+    }
+
+    async function zipPassword() {
+        await fetch('/zip-password', {
+            method: 'POST'
+        });
+    }
+
+    async function unzip() {
+        let file = document.getElementById('file').files[0];
+        let formData = new FormData();
+        formData.append('file', file);
+
+        await fetch('/unzip', {
+            method: 'POST',
+            body: formData
+        });
+    }
+</script>
